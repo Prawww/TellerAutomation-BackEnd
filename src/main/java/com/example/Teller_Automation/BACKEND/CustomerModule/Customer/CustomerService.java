@@ -12,4 +12,7 @@ public interface CustomerService {
 
     EntityResponse<?> modify(Customer customer);
 
+    EntityResponse<?> findTransaction(Long id);
+    EntityResponse<?> findAccount(Long id);
+
 }

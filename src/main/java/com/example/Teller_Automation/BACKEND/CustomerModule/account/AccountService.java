@@ -13,4 +13,8 @@ public interface AccountService {
     EntityResponse<?> findAll();
 
     EntityResponse<?> addTransaction(Long id, Transaction transaction);
+    EntityResponse<?> findTransaction(Long id);
+
+    EntityResponse<?> deposit(Long id, Transaction transaction);
+
 }

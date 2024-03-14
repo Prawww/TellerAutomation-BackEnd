@@ -72,6 +72,7 @@ public class AccountServiceImp implements AccountService{
     @Override
     public EntityResponse<?> findAll() {
         return null;
+
     }
 
     @Override
@@ -115,6 +116,87 @@ public class AccountServiceImp implements AccountService{
             res.setStatusCode(HttpStatus.INTERNAL_SERVER_ERROR.value());
             res.setEntity(null);
 
+        }
+        return res;
+    }
+    @Override
+    public EntityResponse<?> findTransaction(Long id){
+        EntityResponse<Set<Transaction>> res = new EntityResponse<>();
+        try{
+            if(id <=0 ){
+                res.setMessage("Please enter valid id");
+                res.setStatusCode(HttpStatus.BAD_REQUEST.value());
+                res.setEntity(null);
+            }
+            Optional<Account> acc = accountRepo.findById(id);
+
+            if(acc.isPresent()){
+                Account a = acc.get();
+                res.setMessage("Transactions from account " + a.getAccno() + " were fetched successfully");
+                res.setStatusCode(HttpStatus.FOUND.value());
+                res.setEntity(a.getTransaction());
+            }
+            else{
+                res.setMessage("Transactions not found" );
+                res.setStatusCode(HttpStatus.NOT_FOUND.value());
+                res.setEntity(null);
+            }
+        }
+        catch (Exception e){
+            res.setMessage("Error was encountered");
+            res.setStatusCode(HttpStatus.INTERNAL_SERVER_ERROR.value());
+            res.setEntity(null);
+        }
+        return res;
+    }
+    @Override
+    public EntityResponse<?> deposit(Long id, Transaction transaction) {
+        EntityResponse<Account> res = new EntityResponse<>();
+        try {
+            if(id <=0 && transaction == null){
+                res.setMessage("Please enter valid transaction details");
+                res.setStatusCode(HttpStatus.BAD_REQUEST.value());
+                res.setEntity(null);
+            }
+            else {
+                Optional<Account> acc = accountRepo.findById(id);
+                if (acc.isPresent()) {
+                    Account a = acc.get();
+
+
+                    if(a.getTransaction()==null){
+                        Set<Transaction> s= new HashSet<>();
+                        s.add(transaction);
+                        a.setTransaction(s);}
+                    else{
+                        a.getTransaction().add(transaction);
+                    }
+                    Account save = accountRepo.save(a);
+                    res.setMessage("Deposit pending");
+                    res.setStatusCode(HttpStatus.OK.value());
+                    res.setEntity(save);
+                    if(transaction.isCompleted()){
+
+                        double total = a.getBalance() + transaction.getAmount();
+                        a.setBalance(total);
+                        Account t = accountRepo.save(a);
+                    }else{
+                        res.setMessage("Transaction not approved");
+                        res.setStatusCode(HttpStatus.BAD_REQUEST.value());
+                        res.setEntity(null);
+                    }
+                }else{
+                    res.setMessage("Account not found");
+                    res.setStatusCode(HttpStatus.BAD_REQUEST.value());
+                    res.setEntity(null);
+                }
+            }
+        }
+        catch(Exception e){
+            Log.error("Exception {}" + e);
+            res.setMessage("Error encountered");
+            res.setStatusCode(HttpStatus.INTERNAL_SERVER_ERROR.value());
+            res.setEntity(null);
         }
         return res;
     }

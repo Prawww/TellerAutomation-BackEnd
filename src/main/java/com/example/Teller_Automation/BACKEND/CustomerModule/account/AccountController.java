@@ -28,4 +28,13 @@ public class AccountController {
     public EntityResponse<?> findById(@RequestParam Long id) {
         return accountServices.findById(id);
     }
+    @GetMapping("/getTransaction")
+    public EntityResponse<?> findTransaction(@RequestParam Long id){
+        return accountServices.findTransaction(id);
+    }
+
+    @PostMapping("/deposit")
+    public EntityResponse<?> deposit(@RequestParam Long id, @RequestBody Transaction transaction){
+        return accountServices.deposit(id,transaction);
+    }
 }

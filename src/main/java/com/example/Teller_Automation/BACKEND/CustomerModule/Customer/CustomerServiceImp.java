@@ -1,5 +1,6 @@
 package com.example.Teller_Automation.BACKEND.CustomerModule.Customer;
 
+import com.example.Teller_Automation.BACKEND.CustomerModule.Transaction.Transaction;
 import com.example.Teller_Automation.BACKEND.CustomerModule.account.Account;
 import com.example.Teller_Automation.BACKEND.CustomerModule.Utils.EntityResponse;
 
@@ -141,7 +142,67 @@ public class CustomerServiceImp implements CustomerService {
         }
         return res;
     }
+    @Override
+    public EntityResponse<?> findTransaction(Long id) {
+        EntityResponse<Set<Transaction>> res = new EntityResponse<>();
+        try{
+            if(id <=0 ){
+                res.setMessage("Please enter valid id");
+                res.setStatusCode(HttpStatus.BAD_REQUEST.value());
+                res.setEntity(null);
+            }
+            Optional<Customer> customer = customerRepo.findById(id);
 
+            if(customer.isPresent()){
+                Customer c = customer.get();
+                res.setMessage("Transactions from customer " + c.getFirstName() + " " + c.getLastName() + " were fetched successfully");
+                res.setStatusCode(HttpStatus.FOUND.value());
+                res.setEntity(c.getCustomerTransaction());
+            }
+            else{
+                res.setMessage("Transactions not found" );
+                res.setStatusCode(HttpStatus.NOT_FOUND.value());
+                res.setEntity(null);
+            }
+        }
+        catch (Exception e){
+            res.setMessage("Error was encountered");
+            res.setStatusCode(HttpStatus.INTERNAL_SERVER_ERROR.value());
+            res.setEntity(null);
+        }
+        return res;
+    }
+
+    @Override
+    public EntityResponse<?> findAccount(Long id) {
+        EntityResponse<Set<Account>> res = new EntityResponse<>();
+        try{
+            if(id <=0 ){
+                res.setMessage("Please enter valid id");
+                res.setStatusCode(HttpStatus.BAD_REQUEST.value());
+                res.setEntity(null);
+            }
+            Optional<Customer> customer = customerRepo.findById(id);
+
+            if(customer.isPresent()){
+                Customer c = customer.get();
+                res.setMessage("Accounts from customer " + c.getFirstName() + " " + c.getLastName() + " were fetched successfully");
+                res.setStatusCode(HttpStatus.FOUND.value());
+                res.setEntity(c.getCustomerAccount());
+            }
+            else{
+                res.setMessage("Customer not found");
+                res.setStatusCode(HttpStatus.NOT_FOUND.value());
+                res.setEntity(null);
+            }
+        }
+        catch (Exception e){
+            res.setMessage("Error was encountered");
+            res.setStatusCode(HttpStatus.INTERNAL_SERVER_ERROR.value());
+            res.setEntity(null);
+        }
+        return res;
+    }
 
 }
 
