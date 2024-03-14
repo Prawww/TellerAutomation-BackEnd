@@ -24,9 +24,9 @@ public class CustomerController {
 
     @PostMapping("/create")
     public EntityResponse<?> create(@RequestBody Customer customer) {
-        Customer c = new Customer();
-        c.setFirstName(customer.getFirstName());;
-        return customerService.create(c);
+//        Customer c = new Customer();
+//        c.setFirstName(customer.getFirstName());;
+        return customerService.create(customer);
     }
 
     @PostMapping("/addAccount")
@@ -38,4 +38,9 @@ public class CustomerController {
     public EntityResponse<?> modify(@RequestBody Customer customer) {
         return customerService.modify(customer);
     }
+    @GetMapping("/findTransaction")
+    public EntityResponse<?> findTransaction(@RequestParam Long id) {
+        return customerService.findTransaction(id);
+    }
+
 }

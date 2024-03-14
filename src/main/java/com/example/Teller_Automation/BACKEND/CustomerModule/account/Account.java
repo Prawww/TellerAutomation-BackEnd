@@ -20,9 +20,9 @@ public class Account {
     private Long id ;
 
     private String accno;
-    private String balance;
+    private double balance;
 
-    public Account(String accno, String balance) {
+    public Account(String accno, double balance) {
 
         this.accno = accno;
         this.balance  = balance;
