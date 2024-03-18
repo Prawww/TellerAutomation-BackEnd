@@ -10,4 +10,6 @@ public interface TransactionService {
     EntityResponse<?> findById(Long id);
 
     EntityResponse<?> modify(Transaction transaction);
+
+    EntityResponse<?> getAll();
 }
