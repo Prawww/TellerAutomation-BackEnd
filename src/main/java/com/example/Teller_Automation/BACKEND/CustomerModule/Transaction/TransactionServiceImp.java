@@ -5,7 +5,9 @@ import org.jfree.util.Log;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.RequestParam;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -96,4 +98,27 @@ public class TransactionServiceImp implements TransactionService {
             return res;
     }
 
+    @Override
+    public EntityResponse<?> getAll(){
+        EntityResponse<List<Transaction>> response = new EntityResponse<>();
+        try{
+            List<Transaction>allTransactions = transactionRepo.findAll();
+            if(!allTransactions.isEmpty()){
+                response.setMessage("Transactions retrieved successfully");
+                response.setStatusCode(HttpStatus.OK.value());
+                response.setEntity(allTransactions);
+            }
+            else{
+                response.setMessage("No transactions found");
+                response.setStatusCode(HttpStatus.NO_CONTENT.value());
+                response.setEntity(null);
+            }
+        }catch (Exception e){
+            Log.error("An error occurred");
+            response.setMessage("INTERNAL_SERVER_ERROR");
+            response.setStatusCode(HttpStatus.INTERNAL_SERVER_ERROR.value());
+            response.setEntity(null);
+        }
+        return response;
+    }
 }

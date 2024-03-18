@@ -31,4 +31,9 @@ public class TransactionController {
     public EntityResponse<?> modify(@RequestBody Transaction transaction){
       return transactionServices.modify(transaction);
     }
+
+    @GetMapping("/getAllTransactions")
+    public EntityResponse<?> getAllTransactions() {
+        return transactionServices.getAll();
+    }
 }
