@@ -204,6 +204,35 @@ public class CustomerServiceImp implements CustomerService {
         return res;
     }
 
+    @Override
+    public EntityResponse<?> findByNationalId(String nationalId) {
+        EntityResponse<Customer> res = new EntityResponse<>();
+        try{
+            Optional<Customer> customer = customerRepo.findByNationalId(nationalId);
+
+            if(customer.isPresent()){
+                Customer c = customer.get();
+
+                res.setEntity(c);
+                res.setMessage("Customer found");
+                res.setStatusCode(HttpStatus.FOUND.value());
+            }
+            else{
+                res.setMessage("Customer not found");
+                res.setStatusCode(HttpStatus.NOT_FOUND.value());
+                res.setEntity(null);
+            }
+        }
+        catch (Exception e){
+
+            res.setMessage("Error encountered");
+            res.setStatusCode(HttpStatus.INTERNAL_SERVER_ERROR.value());
+            res.setEntity(null);
+        }
+        return res;
+    }
+
+
 }
 
 

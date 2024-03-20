@@ -12,6 +12,8 @@ import java.util.Date;
 @AllArgsConstructor
 @NoArgsConstructor
 @Table(name = "Transaction")
+@Inheritance(strategy = InheritanceType.SINGLE_TABLE)
+@DiscriminatorColumn(name = "transaction_type", discriminatorType = DiscriminatorType.STRING)
 public class Transaction {
 //
 //    private Customer customer;
@@ -27,17 +29,19 @@ public class Transaction {
     @Column(name = "")
     private String transactionId;;
 
-    @Column(name = "")
-    private String transactionType;
+
 
     @Column(name = "")
-    private Long amount;
+    private double amount;
 
     @Column(name = "")
     private Date date;
 
     @Column(name = "")
-    private boolean completed = false;
+    private boolean isCompleted = false;
+    private Long teller_id;
+    private Long account_id;
+
 
 //    public boolean isCompleted(){
 //        return completed;
