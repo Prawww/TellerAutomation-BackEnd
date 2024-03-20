@@ -1,5 +1,7 @@
 package com.example.Teller_Automation.BACKEND.AdminModule.Teller;
 
+import com.example.Teller_Automation.BACKEND.AdminModule.Gl.Gl;
+import com.example.Teller_Automation.BACKEND.AdminModule.Referral.Referral;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -27,6 +29,14 @@ public class Teller {
     @Column(name = "pfnumber")
     private Long pfnumber;
 
+
+    @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @JoinColumn(name="teller_id")
+    private Gl gl;
+
+    @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @JoinColumn(name = "tellerId")
+    private Referral referral;
 //Operational Audit
     @JsonProperty(access = JsonProperty.Access.READ_ONLY)
     private String postedBy;

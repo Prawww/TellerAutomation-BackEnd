@@ -17,4 +17,6 @@ public interface AccountService {
 
     EntityResponse<?> deposit(Long id, Transaction transaction);
 
+//    EntityResponse<?> approveTransaction(Long id, Transaction transaction);
+
 }

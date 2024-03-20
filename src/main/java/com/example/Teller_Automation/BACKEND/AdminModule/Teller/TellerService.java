@@ -1,9 +1,12 @@
 package com.example.Teller_Automation.BACKEND.AdminModule.Teller;
 
+import com.example.Teller_Automation.BACKEND.AdminModule.Gl.Gl;
 import com.example.Teller_Automation.BACKEND.AdminModule.Teller.Teller;
 import com.example.Teller_Automation.BACKEND.AdminModule.Teller.TellerRepo;
 import lombok.extern.slf4j.Slf4j;
 import com.example.Teller_Automation.BACKEND.AdminModule.Utils.EntityResponse;
+import org.apache.poi.ss.formula.functions.T;
+import org.jfree.util.Log;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
@@ -84,8 +87,8 @@ public class TellerService {
 
     }
 
-    public EntityResponse modify(Teller teller) {
-        EntityResponse response = new EntityResponse<>();
+    public EntityResponse<?> modify(Teller teller) {
+        EntityResponse<Teller> response = new EntityResponse<>();
         try {
             Optional<Teller> existingTeller = tellerRepo.findById(teller.getId());
             if (existingTeller.isPresent()) {
@@ -107,13 +110,13 @@ public class TellerService {
             }
         } catch (Exception e) {
             //   throw new RuntimeException(e);
-            log.error("Exception  {}" + e);
+            Log.error("Exception  {}" + e);
         }
         return response;
     }
 
-    public EntityResponse createBulk(List<Teller> tellers) {
-        EntityResponse entityResponse = new EntityResponse<>();
+    public EntityResponse<?> createBulk(List<Teller> tellers) {
+        EntityResponse<List<Teller>> entityResponse = new EntityResponse<>();
         try {
             for (Teller teller : tellers) {
                 teller.setPostedBy("System");
@@ -135,8 +138,8 @@ public class TellerService {
         }
         return entityResponse;
     }
-    public EntityResponse getAll() {
-        EntityResponse entityResponse = new EntityResponse<>();
+    public EntityResponse<?> getAll() {
+        EntityResponse<List<Teller>> entityResponse = new EntityResponse<>();
         try {
             List<Teller> allTellers = tellerRepo.findAll();
             if (!allTellers.isEmpty()) {
@@ -155,6 +158,33 @@ public class TellerService {
             entityResponse.setEntity(null);
         }
         return entityResponse;
+    }
+    public EntityResponse<?> findGl(Long id){
+        EntityResponse<Gl> res = new EntityResponse<>();
+        try{
+            Optional<Teller> teller = tellerRepo.findById(id);
+            if(teller.isPresent()){
+                Teller t = teller.get();
+
+                Gl gl = t.getGl();
+                res.setMessage("Gl found successfully");
+                res.setStatusCode(HttpStatus.FOUND.value());
+                res.setEntity(gl);
+
+            }
+            else{
+                res.setMessage("Gl not found");
+                res.setStatusCode(HttpStatus.NOT_FOUND.value());
+                res.setEntity(null);
+            }
+
+        }
+        catch(Exception e){
+            res.setMessage("Error was encountered");
+            res.setStatusCode(HttpStatus.INTERNAL_SERVER_ERROR.value());
+            res.setEntity(null);
+        }
+        return res;
     }
 
 }

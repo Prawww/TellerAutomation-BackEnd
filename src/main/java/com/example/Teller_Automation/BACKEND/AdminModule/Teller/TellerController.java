@@ -42,6 +42,11 @@ public class TellerController {
         return tellerService.getAll();
     }
 
+    @GetMapping("/findGl")
+    public EntityResponse<?> findGl(Long id){
+        return tellerService.findGl(id);
+    }
+
 
 
 //   @GetMapping("/findById")
