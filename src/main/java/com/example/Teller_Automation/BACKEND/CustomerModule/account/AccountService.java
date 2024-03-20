@@ -1,7 +1,9 @@
 package com.example.Teller_Automation.BACKEND.CustomerModule.account;
 
 
+import com.example.Teller_Automation.BACKEND.CustomerModule.Transaction.Deposit;
 import com.example.Teller_Automation.BACKEND.CustomerModule.Transaction.Transaction;
+import com.example.Teller_Automation.BACKEND.CustomerModule.Transaction.Withdrawal;
 import com.example.Teller_Automation.BACKEND.CustomerModule.Utils.EntityResponse;
 
 public interface AccountService {
@@ -16,5 +18,11 @@ public interface AccountService {
     EntityResponse<?> findTransaction(Long id);
 
     EntityResponse<?> deposit(Long id, Transaction transaction);
+    EntityResponse<?> depositReq(Long id, Deposit deposit);
 
+    EntityResponse<?> withdrawReq(Long id, Withdrawal withdrawal);
+
+    EntityResponse<?> findByAccno(Long accno);
+
+    EntityResponse<?> approve(Long tellerid, Long transactionid);
 }

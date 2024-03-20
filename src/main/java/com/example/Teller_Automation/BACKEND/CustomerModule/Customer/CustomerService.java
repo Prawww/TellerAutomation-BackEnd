@@ -1,5 +1,6 @@
 package com.example.Teller_Automation.BACKEND.CustomerModule.Customer;
 
+import com.example.Teller_Automation.BACKEND.CustomerModule.Transaction.Transaction;
 import com.example.Teller_Automation.BACKEND.CustomerModule.account.Account;
 import com.example.Teller_Automation.BACKEND.CustomerModule.Utils.EntityResponse;
 
@@ -15,4 +16,7 @@ public interface CustomerService {
     EntityResponse<?> findTransaction(Long id);
     EntityResponse<?> findAccount(Long id);
 
+
+
+ EntityResponse<?> findByNationalId(String nationalId);
 }

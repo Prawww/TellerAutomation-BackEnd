@@ -19,15 +19,15 @@ public class Account {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id ;
 
-    private String accno;
+    private Long accno;
     private double balance;
 
-    public Account(String accno, double balance) {
+    public Account(Long accno, double balance) {
 
         this.accno = accno;
         this.balance  = balance;
     }
-    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinColumn(name = "account_id")
     private Set<Transaction> transaction = new HashSet<>();
 
