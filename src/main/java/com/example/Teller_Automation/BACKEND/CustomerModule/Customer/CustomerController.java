@@ -43,4 +43,14 @@ public class CustomerController {
         return customerService.findTransaction(id);
     }
 
+    @GetMapping("/findAccount")
+    public EntityResponse<?> findAccount(@RequestParam Long id) {
+        return customerService.findAccount(id);
+    }
+
+    @GetMapping("/findByNationalId")
+    public EntityResponse<?> findByNationalId(@RequestParam String nationalId){
+        return customerService.findByNationalId(nationalId);
+    }
+
 }

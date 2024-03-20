@@ -29,11 +29,11 @@ public class Customer {
     @Column(name="phone")
     private String phoneNumber;
 
-    @OneToMany(fetch= FetchType.EAGER, cascade = CascadeType.ALL)
+    @OneToMany(fetch= FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinColumn(name ="customer_id")
  Set<Account> customerAccount;
 
-    @OneToMany(fetch= FetchType.EAGER, cascade = CascadeType.ALL)
+    @OneToMany(fetch= FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinColumn(name ="customer_id")
     Set<Transaction> customerTransaction;
 

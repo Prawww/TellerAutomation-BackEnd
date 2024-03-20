@@ -1,6 +1,8 @@
 package com.example.Teller_Automation.BACKEND.CustomerModule.account;
 
+import com.example.Teller_Automation.BACKEND.CustomerModule.Transaction.Deposit;
 import com.example.Teller_Automation.BACKEND.CustomerModule.Transaction.Transaction;
+import com.example.Teller_Automation.BACKEND.CustomerModule.Transaction.Withdrawal;
 import com.example.Teller_Automation.BACKEND.CustomerModule.Utils.EntityResponse;
 import org.springframework.web.bind.annotation.*;
 
@@ -34,7 +36,22 @@ public class AccountController {
     }
 
     @PostMapping("/deposit")
-    public EntityResponse<?> deposit(@RequestParam Long id, @RequestBody Transaction transaction){
-        return accountServices.deposit(id,transaction);
+    public EntityResponse<?> depositReq(@RequestParam Long id, @RequestBody Deposit deposit){
+        return accountServices.depositReq(id, deposit);
+
+    }
+
+    @PostMapping("/withdrawReq")
+    public EntityResponse<?> withdrawReq (@RequestParam Long id, @RequestBody Withdrawal withdrawal){
+        return accountServices.withdrawReq(id, withdrawal);
+    }
+
+    @GetMapping("/findByAccno")
+    public EntityResponse<?> findByAccno(@RequestParam Long accno){
+        return accountServices.findByAccno(accno);}
+
+    @PostMapping("/approve")
+    public EntityResponse<?> approve(Long tellerid, Long transid) {
+        return accountServices.approve(tellerid, transid);
     }
 }
