@@ -12,4 +12,10 @@ public interface TransactionService {
     EntityResponse<?> modify(Transaction transaction);
 
     EntityResponse<?> getAll();
+
+    EntityResponse<?> getWithdraw();
+
+    EntityResponse<?> getDeposit();
+
+//    EntityResponse<?> findByTransaction_Type(String transaction_type);
 }

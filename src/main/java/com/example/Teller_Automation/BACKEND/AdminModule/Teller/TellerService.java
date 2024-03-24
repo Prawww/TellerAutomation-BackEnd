@@ -20,11 +20,10 @@ public class TellerService {
     public EntityResponse create(Teller teller) {
         EntityResponse entityResponse = new EntityResponse<>();
         try {
-            Teller savedTeller = tellerRepo.save(teller);
-            savedTeller.setPostedBy("System");
-            savedTeller.setPostedTime(LocalDateTime.now());
-            savedTeller.setPostedFlag('Y');
-            Teller teller1 = tellerRepo.save(savedTeller);
+            teller.setPostedBy("System");
+            teller.setPostedTime(LocalDateTime.now());
+            teller.setPostedFlag('Y');
+            Teller teller1 = tellerRepo.save(teller);
             entityResponse.setMessage("Teller created successfully");
             entityResponse.setStatusCode(HttpStatus.CREATED.value());
             entityResponse.setEntity(teller1);

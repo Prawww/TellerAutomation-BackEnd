@@ -36,4 +36,19 @@ public class TransactionController {
     public EntityResponse<?> getAllTransactions() {
         return transactionServices.getAll();
     }
+
+//    @GetMapping("/findByTransactionType")
+//    public EntityResponse<?> findByTransType(String transaction_type){
+//        return transactionServices.findByTransaction_Type(transaction_type);
+//    }
+
+    @GetMapping("/getWithdraws")
+    public EntityResponse<?> getWithdraws(){
+        return transactionServices.getWithdraw();
+    }
+
+    @GetMapping("/getDeposits")
+    public EntityResponse<?> getDeposits(){
+        return transactionServices.getDeposit();
+    }
 }
